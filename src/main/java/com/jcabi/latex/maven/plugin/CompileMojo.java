@@ -31,6 +31,7 @@ package com.jcabi.latex.maven.plugin;
 
 import com.jcabi.log.Logger;
 import java.io.File;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 import org.apache.maven.plugin.AbstractMojo;
@@ -75,14 +76,14 @@ public final class CompileMojo extends AbstractMojo {
      * @parameter
      * @required
      */
-    private transient Set<String> sources = new HashSet<String>();
+    private transient Set<String> sources = new HashSet<String>(0);
 
     /**
      * Closures.
      * @parameter
      * @required
      */
-    private transient Set<String> closures = new HashSet<String>();
+    private transient Set<String> closures = new HashSet<String>(0);
 
     /**
      * Shall we skip execution?
@@ -91,26 +92,17 @@ public final class CompileMojo extends AbstractMojo {
      */
     private transient boolean skip;
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public void execute() throws MojoFailureException {
         StaticLoggerBinder.getSingleton().setMavenLog(this.getLog());
         if (this.skip) {
             Logger.info(this, "execution skipped because of 'skip' option");
         } else {
-            this.outputDir.mkdirs();
-            Compiler compiler;
-            try {
-                compiler = new Compiler(this.tempDir);
-            } catch (java.io.IOException ex) {
-                throw new MojoFailureException(
-                    "Failed to prepare compiler",
-                    ex
-                );
+            if (this.outputDir.mkdirs()) {
+                Logger.info(this, "directories created for %s", this.outputDir);
             }
-            for (String src : this.sources) {
+            final Compiler compiler = new Compiler(this.tempDir);
+            for (final String src : this.sources) {
                 this.compile(compiler, src);
             }
         }
@@ -140,7 +132,7 @@ public final class CompileMojo extends AbstractMojo {
                 output,
                 System.nanoTime() - start
             );
-        } catch (java.io.IOException ex) {
+        } catch (final IOException ex) {
             throw new MojoFailureException(
                 String.format("Failed to compile '%s'", name),
                 ex

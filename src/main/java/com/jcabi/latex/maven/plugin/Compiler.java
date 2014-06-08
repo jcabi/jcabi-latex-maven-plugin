@@ -36,6 +36,7 @@ import java.net.URL;
 import java.util.Map;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Compiler.
@@ -56,12 +57,13 @@ final class Compiler {
     /**
      * Public ctor.
      * @param dir Temporary directory to use
-     * @throws IOException If some error inside
      */
-    public Compiler(final File dir) throws IOException {
+    Compiler(final File dir) {
         this.temp = dir;
         if (!this.temp.exists()) {
-            this.temp.mkdir();
+            if (this.temp.mkdir()) {
+                Logger.info(Compiler.class, "directory created: %s", this.temp);
+            }
         }
     }
 
@@ -76,7 +78,9 @@ final class Compiler {
         if (dir.exists()) {
             Logger.info(this, "Source '%s' doesn't require re-compiling", src);
         } else {
-            dir.mkdir();
+            if (dir.mkdir()) {
+                Logger.info(this, "directory %s created", dir);
+            }
             this.copy(src, dir);
             this.process(src, dir);
         }
@@ -92,18 +96,16 @@ final class Compiler {
     @SuppressWarnings("PMD.UseConcurrentHashMap")
     private void copy(final Source src, final File dir) throws IOException {
         final Map<String, URL> files = src.files();
-        for (String path : files.keySet()) {
-            final File file = new File(dir, path);
-            file.getParentFile().mkdirs();
-            FileUtils.copyURLToFile(files.get(path), file);
+        for (final Map.Entry<String, URL> entry : files.entrySet()) {
+            final File file = new File(dir, entry.getKey());
+            if (file.getParentFile().mkdirs()) {
+                Logger.info(this, "directories created for %s", file);
+            }
+            FileUtils.copyURLToFile(entry.getValue(), file);
         }
         Logger.debug(
-            this,
-            "#copy('%s', '%s'): copied %d files: %[list]s",
-            src,
-            dir,
-            files.size(),
-            files.keySet()
+            this, "#copy('%s', '%s'): copied %d files: %[list]s",
+            src, dir, files.size(), files.keySet()
         );
     }
 
@@ -114,45 +116,53 @@ final class Compiler {
      * @throws IOException If some error
      */
     private void process(final Source src, final File dir) throws IOException {
-        final String cmd = String.format(
-            // @checkstyle LineLength (12 lines)
-            // @checkstyle StringLiteralsConcatenation (11 lines)
-            "'%s' -halt-on-error -interaction=nonstopmode '%s.tex'"
-            + " && '%s' -o %2$s.ps %2$s.dvi &&"
-            + " echo quit"
-            + "| '%s' -q -dNOPAUSE -sDEVICE=ppmraw -sOutputFile=- -r300 %2$s.ps"
-            + "| '%s' -bgcolor rgb:ff/ff/ff -falias -fgcolor rgb:00/00/00 -weight 0.6"
-            + "| '%s' -white"
-            + "| '%s' 0.5"
-            + "| '%s' -interlace > '%2$s.png'",
-            this.bin("latex"),
-            src.name(),
-            this.bin("dvips"),
-            this.bin("gs"),
-            this.bin("pnmalias"),
-            this.bin("pnmcrop"),
-            this.bin("pnmscale"),
-            this.bin("pnmtopng")
+        final String cmd = StringUtils.join(
+            String.format(
+                "'%s' -halt-on-error -interaction=nonstopmode '%s.tex'",
+                this.bin("latex"), src.name()
+            ),
+            String.format(
+                " && '%s' -o %s.ps %2$s.dvi",
+                this.bin("dvips"), src.name()
+            ),
+            " && echo quit",
+            String.format(
+                "| '%s' -q -dNOPAUSE -sDEVICE=ppmraw -sOutputFile=- -r300 %s.ps",
+                this.bin("gs"), src.name()
+            ),
+            String.format(
+                "| '%s' -bgcolor rgb:ff/ff/ff -falias -fgcolor rgb:00/00/00 -weight 0.6",
+                this.bin("pnmalias")
+            ),
+            String.format(
+                "| '%s' -white",
+                this.bin("pnmcrop")
+            ),
+            String.format(
+                "| '%s' 0.5",
+                this.bin("pnmscale")
+            ),
+            String.format(
+                "| '%s' -interlace > '%s.png'",
+                this.bin("pnmtopng"), src.name()
+            )
         );
         final ProcessBuilder builder =
             new ProcessBuilder("/bin/sh", "-c", cmd);
         builder.directory(dir);
         Logger.debug(
-            this,
-            "#process('%s', '%s'): running: '%s'",
-            src,
-            dir,
-            cmd
+            this, "#process('%s', '%s'): running: '%s'",
+            src, dir, cmd
         );
         final Process process = builder.start();
         FileUtils.write(
             new File(dir, "_output.log"),
             IOUtils.toString(process.getInputStream())
         );
-        int status;
+        final int status;
         try {
             status = process.waitFor();
-        } catch (java.lang.InterruptedException ex) {
+        } catch (final InterruptedException ex) {
             Thread.currentThread().interrupt();
             throw new IOException(ex);
         }
@@ -185,7 +195,7 @@ final class Compiler {
      * @throws IOException If some error
      */
     private File bin(final String name) throws IOException {
-        final String[] paths = new String[] {
+        final String[] paths = {
             "/bin",
             "/usr/bin",
             "/usr/local/bin",
@@ -196,7 +206,7 @@ final class Compiler {
             "/opt/local/sbin",
         };
         File file = null;
-        for (String path : paths) {
+        for (final String path : paths) {
             final File bin = new File(path, name);
             if (bin.exists() && bin.isFile()) {
                 file = bin;
@@ -213,7 +223,7 @@ final class Compiler {
                         IOUtils.toString(process.getInputStream()).trim()
                     );
                 }
-            } catch (java.lang.InterruptedException ex) {
+            } catch (final InterruptedException ex) {
                 Thread.currentThread().interrupt();
                 throw new IOException(ex);
             }

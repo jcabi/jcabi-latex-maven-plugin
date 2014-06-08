@@ -52,7 +52,7 @@ final class Output {
      * Public ctor.
      * @param path Location of the file
      */
-    public Output(final File path) {
+    Output(final File path) {
         this.file = path;
     }
 
@@ -65,9 +65,6 @@ final class Output {
         FileUtils.copyFileToDirectory(this.file, dir);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String toString() {
         return this.file.getPath();

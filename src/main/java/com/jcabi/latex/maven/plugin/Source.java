@@ -35,6 +35,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.commons.io.FileUtils;
@@ -63,7 +64,7 @@ final class Source {
      */
     @SuppressWarnings("PMD.UseConcurrentHashMap")
     private final transient Map<String, URL> inputs =
-        new HashMap<String, URL>();
+        new HashMap<String, URL>(0);
 
     /**
      * Public ctor.
@@ -72,8 +73,8 @@ final class Source {
      * @param closures List of closures
      * @throws IOException If some error inside
      */
-    public Source(final File dir, final String name,
-        final Collection<String> closures) throws IOException {
+    Source(final File dir, final String name,
+        final Iterable<String> closures) throws IOException {
         if (dir == null || name == null || closures == null) {
             throw new IllegalArgumentException(
                 "NULL is not allowed in Source"
@@ -91,7 +92,7 @@ final class Source {
         }
         this.main = FilenameUtils.getBaseName(name);
         this.append(dir, name);
-        for (String closure : closures) {
+        for (final String closure : closures) {
             this.append(dir, closure);
         }
     }
@@ -108,7 +109,7 @@ final class Source {
             this.main,
             this.inputs.keySet()
         );
-        return this.inputs;
+        return Collections.unmodifiableMap(this.inputs);
     }
 
     /**
@@ -119,9 +120,6 @@ final class Source {
         return this.main;
     }
 
-    /**
-     * {@inheritDoc}
-     */
     @Override
     public String toString() {
         return this.name();
@@ -135,8 +133,8 @@ final class Source {
      */
     @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
     private void append(final File dir, final String name) throws IOException {
-        File file;
-        String path;
+        final File file;
+        final String path;
         if (name.charAt(0) == '/') {
             file = new File(this.getClass().getResource(name).getFile());
             path = FilenameUtils.getName(file.getPath());
@@ -148,7 +146,7 @@ final class Source {
             path = name;
         }
         if (file.isDirectory()) {
-            for (String sub : Source.subs(file)) {
+            for (final String sub : Source.subs(file)) {
                 this.inputs.put(sub, new File(file, sub).toURI().toURL());
             }
         } else {
@@ -160,14 +158,12 @@ final class Source {
      * Find all sub-files in this directory (excluding folders).
      * @param dir Directory with sources
      * @return List of files (recursively)
-     * @throws IOException If some IO problem
      */
-    private static Collection<String> subs(final File dir)
-        throws IOException {
+    private static Iterable<String> subs(final File dir) {
         final IOFileFilter filter = new RegexFileFilter("[^\\.].*");
         final Collection<File> files = FileUtils.listFiles(dir, filter, filter);
         final Collection<String> subs = new ArrayList<String>(files.size());
-        for (File file : files) {
+        for (final File file : files) {
             subs.add(file.getPath().substring(dir.getPath().length() + 1));
         }
         return subs;
