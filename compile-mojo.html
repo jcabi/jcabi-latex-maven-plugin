@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US">
+    <head>
+        <meta charset="UTF-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>jcabi-latex-maven-plugin - 
+    jcabi-latex:compile</title>
+        <link media="all" rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css"/>
+        <link media="all" rel="stylesheet" type="text/css" href="./css/jcabi.css"/>
+                            <script>
+                var _gaq = _gaq || [];
+                _gaq.push(['_setAccount', 'UA-1963507-23']);
+                _gaq.push(['_trackPageview']);
+                (function() {
+                    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+                })();
+            </script>
+                                                                                                                
+<link rel="shortcut icon" href="http://img.jcabi.com/favicon.ico"/>
+                                                                                                                
+<link rel="author" href="https://plus.google.com/u/0/114792568016408327418?rel=author"/>
+                                            <script src="//code.jquery.com/jquery-2.1.0.min.js"></script>
+        <script>
+            $(document).ready(
+                function() {
+                    $(".menu-button").click(
+                        function() {
+                            if ($("#here-goes-menu").attr("class") == "menu-off") {
+                                $("#menu").clone().attr("class", "mobile-menu").appendTo("#here-goes-menu");
+                                $("#here-goes-menu").attr("class", "menu-on");
+                            } else {
+                                $(".mobile-menu").hide();
+                                $("#here-goes-menu").attr("class", "menu-off");
+                            }
+                        }
+                    );
+                }
+            );
+        </script>
+    </head>
+    <body>
+                <section class="page" itemscope="" itemtype="http://schema.org/BlogPosting">
+            <nav class="menu-section" role="navigation">
+                <ul class="menu" id="menu">
+                                                                                    <li>
+                            Overview
+                                                            <ul>
+                                                                                                    <li >
+                            <span>                        <a href="index.html" title="Introduction">Introduction</a>
+        </span>
+                                                                                                                                                                <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                        <li >
+                            <span>                        <a href="usage.html" title="Usage">Usage</a>
+        </span>
+                                                                                                                                                                <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                        <li >
+                            <span>                        <a href="plugin-info.html" title="Goals">Goals</a>
+        </span>
+                                                                                                                                                                <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                        <li >
+                            <span>                        <a href="faq.html" title="FAQ">FAQ</a>
+        </span>
+                                                                                                                                                                <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                                                        <li >
+                            <span>                        <a href="https://github.com/jcabi/jcabi-latex-maven-plugin/releases" title="Release History">Release History</a>
+        </span>
+                                                                                                                                                                <ul>
+                                                                    </ul>
+                                                    </li>
+                                                                                        </ul>
+                                                    </li>
+                                            <li>
+                            Project Documentation
+                                                            <ul>
+                                                                                                    <li >
+                            <span>                        <a href="project-info.html" title="Project Information">Project Information</a>
+        </span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </li>
+                                                                                                                        <li >
+                            <span>                        <a href="project-reports.html" title="Project Reports">Project Reports</a>
+        </span>
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    </li>
+                                                                                        </ul>
+                                                    </li>
+                                    </ul>
+            </nav>
+            <div class="right-side">
+                <main role="main">
+                    <div class="content">
+                        <header>
+                            <i class="menu-button fa fa-align-justify"></i>
+                            <div class="logo">
+                                <a href="../"
+                                    title=" logo ">
+                                    <img src="http://img.jcabi.com/logo-square.png"
+                                        alt="jcabi"
+                                                                                    width="64"
+                                                                                                                            height="64"
+                                                                                itemprop="image"
+                                    />
+                                </a>
+                            </div>
+                            <div class="date">
+                                <div class="date-numbers">
+                                    <strong itemprop="version">1.0</strong>
+                                    
+                                    <time itemprop="datePublished" datetime="2014-06-09T08:55:26Z">
+                                        
+                                        09-Jun-2014
+                                    </time>
+                                </div>
+                                                                                                    <div>
+                                        <iframe src="http://ghbtns.com/github-btn.html?user=jcabi&amp;repo=jcabi-latex-maven-plugin&amp;type=watch&amp;count=true&amp;size=large"
+                                            style="border-width:0px;overflow:hidden;width:170px;height:30px;">
+                                        </iframe>
+                                    </div>
+                                                            </div>
+                            <div id="here-goes-menu" class="menu-off"></div>
+                        </header>
+                        <article role="article" itemprop="articleBody">
+                            
+  
+    <div class="section">
+<h2>jcabi-latex:compile<a name="jcabi-latex:compile"></a></h2>
+      
+<p><b>Full name</b>:</p>
+      
+<p>com.jcabi:jcabi-latex-maven-plugin:1.0:compile</p>
+      
+<p><b>Description</b>:</p>
+      
+<div>Compile PNG images and PDF documents from TeX/LaTeX sources.</div>
+      
+<p><b>Attributes</b>:</p>
+      
+<ul>
+        
+<li>Requires a Maven project to be executed.</li>
+        
+<li>The goal is thread-safe and supports parallel builds.</li>
+        
+<li>Binds by default to the <a class="externalLink" href="http://maven.apache.org/ref/current/maven-core/lifecycles.html">lifecycle phase</a>: <tt>pre-site</tt>.</li>
+      </ul>
+      
+<div class="section">
+<h3>Required Parameters<a name="Required_Parameters"></a></h3>
+        
+<table class="bodyTable" border="0">
+          
+<tr class="a">
+            
+<th>Name</th>
+            
+<th>Type</th>
+            
+<th>Since</th>
+            
+<th>Description</th>
+          </tr>
+          
+<tr class="b">
+            
+<td><b><a href="#closures">closures</a></b></td>
+            
+<td><tt>Set</tt></td>
+            
+<td><tt>-</tt></td>
+            
+<td>Closures.<br /></td>
+          </tr>
+          
+<tr class="a">
+            
+<td><b><a href="#outputDir">outputDir</a></b></td>
+            
+<td><tt>File</tt></td>
+            
+<td><tt>-</tt></td>
+            
+<td>Destination directory.<br /></td>
+          </tr>
+          
+<tr class="b">
+            
+<td><b><a href="#skip">skip</a></b></td>
+            
+<td><tt>boolean</tt></td>
+            
+<td><tt>-</tt></td>
+            
+<td>Shall we skip execution?<br /><b>Default value is</b>: <tt>false</tt>.<br /><b>User property is</b>: <tt>latex.skip</tt>.</td>
+          </tr>
+          
+<tr class="a">
+            
+<td><b><a href="#sources">sources</a></b></td>
+            
+<td><tt>Set</tt></td>
+            
+<td><tt>-</tt></td>
+            
+<td>Sources.<br /></td>
+          </tr>
+          
+<tr class="b">
+            
+<td><b><a href="#sourcesDir">sourcesDir</a></b></td>
+            
+<td><tt>File</tt></td>
+            
+<td><tt>-</tt></td>
+            
+<td>Sources directory.<br /></td>
+          </tr>
+          
+<tr class="a">
+            
+<td><b><a href="#tempDir">tempDir</a></b></td>
+            
+<td><tt>File</tt></td>
+            
+<td><tt>-</tt></td>
+            
+<td>Temporary directory.<br /></td>
+          </tr>
+        </table>
+      </div>
+      
+<div class="section">
+<h3>Parameter Details<a name="Parameter_Details"></a></h3>
+        
+<p><b><a name="closures">closures</a>:</b></p>
+        
+<div>Closures.</div>
+        
+<ul>
+          
+<li><b>Type</b>: <tt>java.util.Set</tt></li>
+          
+<li><b>Required</b>: <tt>Yes</tt></li>
+        </ul><hr />
+<p><b><a name="outputDir">outputDir</a>:</b></p>
+        
+<div>Destination directory.</div>
+        
+<ul>
+          
+<li><b>Type</b>: <tt>java.io.File</tt></li>
+          
+<li><b>Required</b>: <tt>Yes</tt></li>
+          
+<li><b>Expression</b>: <tt>${project.build.directory}/site/latex</tt></li>
+        </ul><hr />
+<p><b><a name="skip">skip</a>:</b></p>
+        
+<div>Shall we skip execution?</div>
+        
+<ul>
+          
+<li><b>Type</b>: <tt>boolean</tt></li>
+          
+<li><b>Required</b>: <tt>Yes</tt></li>
+          
+<li><b>User Property</b>: <tt>latex.skip</tt></li>
+          
+<li><b>Default</b>: <tt>false</tt></li>
+        </ul><hr />
+<p><b><a name="sources">sources</a>:</b></p>
+        
+<div>Sources.</div>
+        
+<ul>
+          
+<li><b>Type</b>: <tt>java.util.Set</tt></li>
+          
+<li><b>Required</b>: <tt>Yes</tt></li>
+        </ul><hr />
+<p><b><a name="sourcesDir">sourcesDir</a>:</b></p>
+        
+<div>Sources directory.</div>
+        
+<ul>
+          
+<li><b>Type</b>: <tt>java.io.File</tt></li>
+          
+<li><b>Required</b>: <tt>Yes</tt></li>
+          
+<li><b>Expression</b>: <tt>${project.basedir}/src/main/latex</tt></li>
+        </ul><hr />
+<p><b><a name="tempDir">tempDir</a>:</b></p>
+        
+<div>Temporary directory.</div>
+        
+<ul>
+          
+<li><b>Type</b>: <tt>java.io.File</tt></li>
+          
+<li><b>Required</b>: <tt>Yes</tt></li>
+          
+<li><b>Expression</b>: <tt>${project.build.directory}/latex-temp</tt></li>
+        </ul>
+      </div>
+    </div>
+  
+
+                            <img class="maven-logo" src="//img.jcabi.com/built-by-maven.png" alt="built by maven"/>
+                        </article>
+                    </div>
+                </main>
+                <footer class="legal-notes">
+                    <div>
+                        Copyright &#169;
+                                                                            2012-2014
+                                            </div>
+                    <div>jcabi.com, All Rights Reserved.</div>
+                    <div><a href="http://maven.apache.org/privacy-policy.html">Privacy Policy</a>.</div>
+                </footer>
+            </div>
+        </section>
+    </body>
+</html>
