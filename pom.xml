@@ -36,7 +36,7 @@
         <version>1.8</version>
     </parent>
     <artifactId>jcabi-latex-maven-plugin</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>2.0-SNAPSHOT</version>
     <packaging>maven-plugin</packaging>
     <name>jcabi-latex-maven-plugin</name>
     <description>LaTeX Maven Plugin</description>
