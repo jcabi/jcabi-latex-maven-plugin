@@ -70,6 +70,9 @@ Usage
   Run <<<mvn site>>> and a PNG file will be created in
   <<<target/site/latex/picture.png>>>.
 
+  You should have LaTeX and {{{http://netpbm.sourceforge.net/}Netpbm}}
+  installed on your build machine.
+
 * Cutting Edge Version
 
   If you want to use current version of the product, you can do it with

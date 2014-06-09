@@ -46,6 +46,7 @@ import org.slf4j.impl.StaticLoggerBinder;
  * @goal compile
  * @phase pre-site
  * @threadSafe
+ * @checkstyle MemberNameCheck (500 lines)
  */
 @SuppressWarnings("PMD.ImmutableField")
 public final class CompileMojo extends AbstractMojo {

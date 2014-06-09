@@ -91,17 +91,12 @@
             <artifactId>commons-io</artifactId>
         </dependency>
         <dependency>
-            <!-- Forward all calls to SLF4J to Maven log. -->
-            <groupId>com.jcabi</groupId>
-            <artifactId>jcabi-maven-slf4j</artifactId>
-            <version>0.1.10</version>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
         </dependency>
         <dependency>
-            <!-- Forward all LOG4J calls to SLF4J -->
-            <groupId>org.slf4j</groupId>
-            <artifactId>log4j-over-slf4j</artifactId>
-            <version>1.6.2</version>
-            <scope>runtime</scope>
+            <groupId>com.jcabi</groupId>
+            <artifactId>jcabi-maven-slf4j</artifactId>
         </dependency>
     </dependencies>
     <build>
@@ -147,4 +142,23 @@
             </plugin>
         </plugins>
     </build>
+    <profiles>
+        <profile>
+            <id>qulice</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.qulice</groupId>
+                        <artifactId>qulice-maven-plugin</artifactId>
+                        <configuration>
+                            <excludes>
+                                <exclude>xml:/src/it/settings.xml</exclude>
+                                <exclude>findbugs:.*</exclude>
+                            </excludes>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

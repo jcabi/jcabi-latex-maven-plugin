@@ -60,10 +60,8 @@ final class Compiler {
      */
     Compiler(final File dir) {
         this.temp = dir;
-        if (!this.temp.exists()) {
-            if (this.temp.mkdir()) {
-                Logger.info(Compiler.class, "directory created: %s", this.temp);
-            }
+        if (!this.temp.exists() && this.temp.mkdir()) {
+            Logger.info(Compiler.class, "directory created: %s", this.temp);
         }
     }
 
@@ -127,10 +125,12 @@ final class Compiler {
             ),
             " && echo quit",
             String.format(
+                // @checkstyle LineLength (1 line)
                 "| '%s' -q -dNOPAUSE -sDEVICE=ppmraw -sOutputFile=- -r300 %s.ps",
                 this.bin("gs"), src.name()
             ),
             String.format(
+                // @checkstyle LineLength (1 line)
                 "| '%s' -bgcolor rgb:ff/ff/ff -falias -fgcolor rgb:00/00/00 -weight 0.6",
                 this.bin("pnmalias")
             ),

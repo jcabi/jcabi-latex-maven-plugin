@@ -1,0 +1,4 @@
+language: java
+install:
+  - sudo apt-get install latex
+script: mvn clean install -Pqulice
