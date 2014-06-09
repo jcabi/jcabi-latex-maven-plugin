@@ -1,9 +1,9 @@
  ------
- Jcabi LaTeX Maven Plugin
+ LaTeX Maven Plugin
  ------
  Yegor Bugayenko
  ------
- 2012-03-25
+ 2014-06-09
  ------
 
 ~~
@@ -36,7 +36,7 @@
 ~~ OF THE POSSIBILITY OF SUCH DAMAGE.
 ~~
 
-jcabi LaTeX Maven Plugin
+LaTeX Maven Plugin
 
   See {{{./usage.html}usage}} page.
 
@@ -44,6 +44,6 @@ jcabi LaTeX Maven Plugin
   them to PNG images during project build cycle. This is how the picture
   at this page is generated: {{{http://www.rexsl.com/}http://www.rexsl.com/}}.
   The source of this picture is here:
-  {{{http://github.com/yegor256/rexsl/src/main/latex/layers.tex?rev=1218}layers.tex}}.
+  {{{https://github.com/yegor256/rexsl/blob/master/src/main/latex/layers.tex}layers.tex}}.
 
   Isn't it elegant? :)
