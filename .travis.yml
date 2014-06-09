@@ -1,4 +1,5 @@
 language: java
 install:
-  - sudo apt-get install latex
+  - sudo apt-get install texlive-full
+  - sudo apt-get install netpbm
 script: mvn clean install -Pqulice
