@@ -214,8 +214,7 @@ final class Compiler {
             }
         }
         if (file == null) {
-            final ProcessBuilder builder =
-                new ProcessBuilder("/usr/bin/which", name);
+            final ProcessBuilder builder = createProcessBuilder4BinLocation(name);
             final Process process = builder.start();
             try {
                 if (process.waitFor() == 0) {
@@ -237,6 +236,26 @@ final class Compiler {
             );
         }
         return file;
+    }
+
+    /**
+     * Creates {@link ProcessBuilder} to locate a binary by the specified name
+     * depending on the actual OS.
+     * 
+     * @param name Short name
+     * @return A new {@link ProcessBuilder} instance
+     */
+    private ProcessBuilder createProcessBuilder4BinLocation(final String name) {
+        final String os = System.getProperty("os.name");
+
+        String command;
+        if (StringUtils.startsWith(os, "Windows")) {
+            command = "where";
+        } else {
+            command = "/usr/bin/which";
+        }
+
+        return new ProcessBuilder(command, name);
     }
 
 }
