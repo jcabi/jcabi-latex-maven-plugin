@@ -215,7 +215,7 @@ final class Compiler {
         }
         if (file == null) {
             final ProcessBuilder builder =
-                    this.createProcessBuilderForBinLocation(name);
+                this.createProcessBuilderToLocate(name);
             final Process process = builder.start();
             try {
                 if (process.waitFor() == 0) {
@@ -246,7 +246,7 @@ final class Compiler {
      * @param name Short name
      * @return A new {@link ProcessBuilder} instance
      */
-    private ProcessBuilder createProcessBuilderForBinLocation(final String name) {
+    private ProcessBuilder createProcessBuilderToLocate(final String name) {
         final String osName = System.getProperty("os.name");
         String command;
         if (StringUtils.startsWith(osName, "Windows")) {
