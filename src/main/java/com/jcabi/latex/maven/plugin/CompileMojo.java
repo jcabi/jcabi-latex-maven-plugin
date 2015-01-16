@@ -100,7 +100,7 @@ public final class CompileMojo extends AbstractMojo {
         if (this.skip) {
             Logger.info(this, "execution skipped because of 'skip' option");
         } else {
-            checkOS();
+            this.checkOS();
             if (this.outputDir.mkdirs()) {
                 Logger.info(this, "directories created for %s", this.outputDir);
             }
