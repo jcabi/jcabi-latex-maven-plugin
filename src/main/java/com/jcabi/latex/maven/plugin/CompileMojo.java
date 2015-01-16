@@ -151,7 +151,9 @@ public final class CompileMojo extends AbstractMojo {
     private void checkOS() throws MojoFailureException {
         final String osName = System.getProperty("os.name");
         if (StringUtils.startsWith(osName, "Windows")) {
-            throw new MojoFailureException("Sorry, this plugin cannot run on Windows system!");
+            throw new MojoFailureException(
+                "Sorry, this plugin cannot run on Windows system!"
+            );
         }
     }
 }
