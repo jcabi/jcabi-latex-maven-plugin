@@ -34,6 +34,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoFailureException;
 import org.slf4j.impl.StaticLoggerBinder;
@@ -99,6 +100,7 @@ public final class CompileMojo extends AbstractMojo {
         if (this.skip) {
             Logger.info(this, "execution skipped because of 'skip' option");
         } else {
+            checkOS();
             if (this.outputDir.mkdirs()) {
                 Logger.info(this, "directories created for %s", this.outputDir);
             }
@@ -141,4 +143,15 @@ public final class CompileMojo extends AbstractMojo {
         }
     }
 
+    /**
+     * Checks the type of the operating system running and failing if it's an
+     * unsupported one (like Windows) for this plugin.
+     * @throws MojoFailureException If an unsupported operation system is detected
+     */
+    private void checkOS() throws MojoFailureException {
+        final String osName = System.getProperty("os.name");
+        if (StringUtils.startsWith(osName, "Windows")) {
+            throw new MojoFailureException("Sorry, this plugin cannot run on Windows system!");
+        }
+    }
 }
