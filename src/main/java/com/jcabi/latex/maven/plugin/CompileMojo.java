@@ -34,6 +34,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
+import org.apache.commons.lang3.SystemUtils;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoFailureException;
 import org.slf4j.impl.StaticLoggerBinder;
@@ -99,6 +100,11 @@ public final class CompileMojo extends AbstractMojo {
         if (this.skip) {
             Logger.info(this, "execution skipped because of 'skip' option");
         } else {
+            if (SystemUtils.IS_OS_WINDOWS) {
+                throw new MojoFailureException(
+                    "Sorry, this plugin cannot run on Windows system!"
+                );
+            }
             if (this.outputDir.mkdirs()) {
                 Logger.info(this, "directories created for %s", this.outputDir);
             }
@@ -140,5 +146,4 @@ public final class CompileMojo extends AbstractMojo {
             );
         }
     }
-
 }

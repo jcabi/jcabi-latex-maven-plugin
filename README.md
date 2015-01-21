@@ -5,6 +5,8 @@
 
 More details are here: [latex.jcabi.com](http://latex.jcabi.com/index.html)
 
+This plugin currently **not** able to run on systems running any kind of **Windows** operating systems!
+
 ## Questions?
 
 If you have any questions about the framework, or something doesn't work as expected,

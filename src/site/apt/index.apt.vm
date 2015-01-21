@@ -47,3 +47,5 @@ LaTeX Maven Plugin
   {{{https://github.com/yegor256/rexsl/blob/master/src/main/latex/layers.tex}layers.tex}}.
 
   Isn't it elegant? :)
+
+  This plugin currently not able to run on systems running any kind of Windows operating systems!
