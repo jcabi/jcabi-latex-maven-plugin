@@ -3,17 +3,17 @@
 [![Build Status](https://travis-ci.org/jcabi/jcabi-latex-maven-plugin.svg?branch=master)](https://travis-ci.org/jcabi/jcabi-latex-maven-plugin)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.jcabi/jcabi-latex-maven-plugin/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.jcabi/jcabi-latex-maven-plugin)
 
-Maven plugin for generating PNG images out of LaTeX sources during `mvn site` phase.
+Maven plugin for generating PNG images from LaTeX sources during `mvn site` phase.
 
 Project website: [latex.jcabi.com](http://latex.jcabi.com/index.html)
 
 ## Usage
 
-1. Make sure LaTeX and [Netpbm](http://netpbm.sourceforge.net/) are installed on your machine;
+- Make sure LaTeX and [Netpbm](http://netpbm.sourceforge.net/) are installed on your machine;
 
-2. Configure the plugin linkng it to your LaTeX sources:
+- Configure the plugin pointing it to your LaTeX sources:
 
-```
+```xml
 <project>
   <build>
     <plugins>
@@ -39,7 +39,7 @@ Project website: [latex.jcabi.com](http://latex.jcabi.com/index.html)
 </project>
 ```
 
-3. Run `mvn site` and a PNG file will be created in `target/site/latex/picture.png`
+- Run `mvn site` and a PNG file will be created in `target/site/latex/picture.png`
 
 
 ## Known issues
