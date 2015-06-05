@@ -3,9 +3,48 @@
 [![Build Status](https://travis-ci.org/jcabi/jcabi-latex-maven-plugin.svg?branch=master)](https://travis-ci.org/jcabi/jcabi-latex-maven-plugin)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.jcabi/jcabi-latex-maven-plugin/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.jcabi/jcabi-latex-maven-plugin)
 
-More details are here: [latex.jcabi.com](http://latex.jcabi.com/index.html)
+Maven plugin for generating PNG images from LaTeX sources during `mvn site` phase.
 
-This plugin currently **not** able to run on systems running any kind of **Windows** operating systems!
+Project website: [latex.jcabi.com](http://latex.jcabi.com/index.html)
+
+## Usage
+
+- Make sure LaTeX and [Netpbm](http://netpbm.sourceforge.net/) are installed on your machine;
+
+- Configure the plugin pointing it to your LaTeX sources:
+
+```xml
+<project>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>com.jcabi</groupId>
+        <artifactId>jcabi-latex-maven-plugin</artifactId>
+        <version>1.1</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>compile</goal>
+            </goals>
+            <configuration>
+              <sources>
+                <file>picture.tex</file>
+              </sources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>
+```
+
+- Run `mvn site` and a PNG file will be created in `target/site/latex/picture.png`
+
+
+## Known issues
+
+Using this plugin on a Windows machine is not supported.
 
 ## Questions?
 
