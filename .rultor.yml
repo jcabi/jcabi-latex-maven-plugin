@@ -2,7 +2,7 @@ architect:
 - yegor256
 - dmarkov
 install:
-- sudo apt-get install -y netpbm
+- sudo apt-get install -y netpbm texlive-full
 - sudo gem install --no-ri --no-rdoc pdd
 - sudo gem install --no-ri --no-rdoc est
 assets:
