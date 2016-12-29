@@ -9,20 +9,17 @@ script:
   - mvn clean
   - pdd --source=$(pwd) --file=/dev/null
   - est --dir=est --file=/dev/null
-addons:
-  apt:
-    packages:
-    - libmagic1
-    - libmagic-dev
-    - texlive-full
-    - netpbm
+before_install:
+  - rvm install 2.2.2
+  - rvm use 2.2.2
 install:
   - gem install pdd
   - gem install est
 env:
   global:
-    - MAVEN_OPTS="-Xmx256m -Dfile.encoding=UTF-8"
-    - JAVA_OPTS="-Xmx256m -Dfile.encoding=UTF-8"
+    - MAVEN_OPTS="-Xmx256m"
+    - JAVA_OPTS="-Xmx256m"
 jdk:
   - oraclejdk8
   - oraclejdk7
+  - openjdk7
