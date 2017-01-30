@@ -15,6 +15,13 @@ before_install:
 install:
   - gem install pdd
   - gem install est
+addons:
+  apt:
+    packages:
+    - libmagic1
+    - libmagic-dev
+    - texlive-full
+    - netpbm
 env:
   global:
     - MAVEN_OPTS="-Xmx256m"
