@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/jcabi/jcabi-latex-maven-plugin.svg?branch=master)](https://travis-ci.org/jcabi/jcabi-latex-maven-plugin)
 [![PDD status](http://www.0pdd.com/svg?name=jcabi/jcabi-latex-maven-plugin)](http://www.0pdd.com/p?name=jcabi/jcabi-latex-maven-plugin)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.jcabi/jcabi-latex-maven-plugin/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.jcabi/jcabi-latex-maven-plugin)
-[![Javadoc](https://javadoc-emblem.rhcloud.com/doc/com.jcabi/jcabi-latex-maven-plugin/badge.svg)](http://www.javadoc.io/doc/com.jcabi/jcabi-latex-maven-plugin)
+[![Javadoc](https://javadoc.io/badge/com.jcabi/jcabi-latex-maven-plugin.svg)](http://www.javadoc.io/doc/com.jcabi/jcabi-latex-maven-plugin)
 
 Maven plugin for generating PNG images from LaTeX sources during `mvn site` phase.
 
