@@ -37,61 +37,68 @@ import java.util.Set;
 import org.apache.commons.lang3.SystemUtils;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoFailureException;
+import org.apache.maven.plugins.annotations.LifecyclePhase;
+import org.apache.maven.plugins.annotations.Mojo;
+import org.apache.maven.plugins.annotations.Parameter;
 import org.slf4j.impl.StaticLoggerBinder;
 
 /**
  * Compile PNG images and PDF documents from TeX/LaTeX sources.
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
- * @version $Id$
- * @goal compile
- * @phase pre-site
- * @threadSafe
+ * @since 1.0
  * @checkstyle MemberNameCheck (500 lines)
  */
+@Mojo(
+    name = "compile",
+    defaultPhase = LifecyclePhase.PRE_SITE,
+    threadSafe = true
+)
 @SuppressWarnings("PMD.ImmutableField")
 public final class CompileMojo extends AbstractMojo {
 
     /**
      * Sources directory.
-     * @parameter expression="${project.basedir}/src/main/latex"
-     * @required
      */
+    @Parameter(
+        defaultValue = "${project.basedir}/src/main/latex",
+        required = true
+    )
     private transient File sourcesDir;
 
     /**
      * Destination directory.
-     * @parameter expression="${project.build.directory}/site/latex"
-     * @required
      */
+    @Parameter(
+        defaultValue = "${project.build.directory}/site/latex",
+        required = true
+    )
     private transient File outputDir;
 
     /**
      * Temporary directory.
-     * @parameter expression="${project.build.directory}/latex-temp"
-     * @required
      */
+    @Parameter(
+        defaultValue = "${project.build.directory}/latex-temp",
+        required = true
+    )
     private transient File tempDir;
 
     /**
      * Sources.
-     * @parameter
-     * @required
      */
-    private transient Set<String> sources = new HashSet<String>(0);
+    @Parameter(required = true)
+    private transient Set<String> sources = new HashSet<>(0);
 
     /**
      * Closures.
-     * @parameter
-     * @required
      */
-    private transient Set<String> closures = new HashSet<String>(0);
+    @Parameter(required = true)
+    private transient Set<String> closures = new HashSet<>(0);
 
     /**
      * Shall we skip execution?
-     * @parameter expression="${latex.skip}" default-value="false"
-     * @required
      */
+    @Parameter(property = "latex.skip", defaultValue = "false")
     private transient boolean skip;
 
     @Override
@@ -108,9 +115,8 @@ public final class CompileMojo extends AbstractMojo {
             if (this.outputDir.mkdirs()) {
                 Logger.info(this, "directories created for %s", this.outputDir);
             }
-            final Compiler compiler = new Compiler(this.tempDir);
             for (final String src : this.sources) {
-                this.compile(compiler, src);
+                this.compile(new Compiler(this.tempDir), src);
             }
         }
     }
@@ -121,15 +127,16 @@ public final class CompileMojo extends AbstractMojo {
      * @param name The name of the source
      * @throws MojoFailureException If some problem
      */
+    @SuppressWarnings("PMD.UnnecessaryLocalRule")
     private void compile(final Compiler compiler, final String name)
         throws MojoFailureException {
-        final long start = System.nanoTime();
         try {
             final Source source = new Source(
                 this.sourcesDir,
                 name,
                 this.closures
             );
+            final long started = System.nanoTime();
             final Output output = compiler.compile(source);
             output.saveTo(this.outputDir);
             Logger.info(
@@ -137,7 +144,7 @@ public final class CompileMojo extends AbstractMojo {
                 "'%s' compiled and saved as '%s', in %[nano]s",
                 source,
                 output,
-                System.nanoTime() - start
+                System.nanoTime() - started
             );
         } catch (final IOException ex) {
             throw new MojoFailureException(

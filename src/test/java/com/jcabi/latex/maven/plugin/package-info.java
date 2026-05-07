@@ -4,7 +4,7 @@
  */
 
 /**
- * Maven plugin to compile LaTeX sources to PDF and PNG.
+ * Tests for jcabi-latex-maven-plugin.
  *
  * @since 1.0
  */
