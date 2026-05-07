@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!--
- * Copyright (c) 2012-2017, jcabi.com
+ * Copyright (c) 2012-2026, jcabi.com
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -35,7 +35,7 @@
     <parent>
         <groupId>com.jcabi</groupId>
         <artifactId>jcabi</artifactId>
-        <version>1.16</version>
+        <version>1.44.0</version>
     </parent>
     <artifactId>jcabi-latex-maven-plugin</artifactId>
     <version>2.0-SNAPSHOT</version>
@@ -47,8 +47,8 @@
         <url>https://github.com/jcabi/jcabi-latex-maven-plugin/issues</url>
     </issueManagement>
     <ciManagement>
-        <system>travis</system>
-        <url>https://travis-ci.org/jcabi/jcabi-latex-maven-plugin</url>
+        <system>github</system>
+        <url>https://github.com/jcabi/jcabi-latex-maven-plugin/actions</url>
     </ciManagement>
     <scm>
         <connection>scm:git:github.com:jcabi/jcabi-latex-maven-plugin.git</connection>
@@ -62,8 +62,7 @@
         </site>
     </distributionManagement>
     <properties>
-        <maven.version>3.8.1</maven.version>
-        <sisu.version>2.3.4</sisu.version>
+        <maven.version>3.9.15</maven.version>
     </properties>
     <dependencies>
         <dependency>
@@ -86,6 +85,12 @@
             <groupId>org.apache.maven</groupId>
             <artifactId>maven-plugin-api</artifactId>
             <version>${maven.version}</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven.plugin-tools</groupId>
+            <artifactId>maven-plugin-annotations</artifactId>
+            <version>3.15.2</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
