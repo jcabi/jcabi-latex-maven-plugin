@@ -48,8 +48,7 @@ import org.apache.commons.io.filefilter.RegexFileFilter;
  *
  * <p>This class is immutable and thread-safe.
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
- * @version $Id$
+ * @since 1.0
  */
 final class Source {
 
@@ -62,9 +61,7 @@ final class Source {
      * Collection of files (this Map is updated only in ctor and never
      * ever touched/changed again).
      */
-    @SuppressWarnings("PMD.UseConcurrentHashMap")
-    private final transient Map<String, URL> inputs =
-        new HashMap<String, URL>(0);
+    private final transient Map<String, URL> inputs;
 
     /**
      * Public ctor.
@@ -75,26 +72,8 @@ final class Source {
      */
     Source(final File dir, final String name,
         final Iterable<String> closures) throws IOException {
-        if (dir == null || name == null || closures == null) {
-            throw new IllegalArgumentException(
-                "NULL is not allowed in Source"
-            );
-        }
-        if (!dir.exists()) {
-            throw new IllegalArgumentException(
-                String.format("Directory '%s' doesn't exist", dir)
-            );
-        }
-        if (name.isEmpty()) {
-            throw new IllegalArgumentException(
-                "Empty name of source is not allowed"
-            );
-        }
         this.main = FilenameUtils.getBaseName(name);
-        this.append(dir, name);
-        for (final String closure : closures) {
-            this.append(dir, closure);
-        }
+        this.inputs = Source.collect(dir, name, closures);
     }
 
     /**
@@ -126,17 +105,51 @@ final class Source {
     }
 
     /**
-     * Append one new source to the list.
+     * Build the map of files for the given source and closures.
+     * @param dir Directory with sources
+     * @param name The main source name
+     * @param closures Additional sources to include
+     * @return Map of file path to URL
+     * @throws IOException If some error inside
+     */
+    private static Map<String, URL> collect(final File dir, final String name,
+        final Iterable<String> closures) throws IOException {
+        if (dir == null || name == null || closures == null) {
+            throw new IllegalArgumentException(
+                "NULL is not allowed in Source"
+            );
+        }
+        if (!dir.exists()) {
+            throw new IllegalArgumentException(
+                String.format("Directory '%s' doesn't exist", dir)
+            );
+        }
+        if (name.isEmpty()) {
+            throw new IllegalArgumentException(
+                "Empty name of source is not allowed"
+            );
+        }
+        final Map<String, URL> map = new HashMap<>(0);
+        Source.append(map, dir, name);
+        for (final String closure : closures) {
+            Source.append(map, dir, closure);
+        }
+        return map;
+    }
+
+    /**
+     * Append one new source to the map.
+     * @param map Target map of paths to URLs
      * @param dir Directory with sources
      * @param name The name of source
      * @throws IOException If some IO problem
      */
-    @SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
-    private void append(final File dir, final String name) throws IOException {
+    private static void append(final Map<String, URL> map, final File dir,
+        final String name) throws IOException {
         final File file;
         final String path;
         if (name.charAt(0) == '/') {
-            file = new File(this.getClass().getResource(name).getFile());
+            file = new File(Source.class.getResource(name).getFile());
             path = FilenameUtils.getName(file.getPath());
         } else {
             file = new File(dir, name);
@@ -147,10 +160,10 @@ final class Source {
         }
         if (file.isDirectory()) {
             for (final String sub : Source.subs(file)) {
-                this.inputs.put(sub, new File(file, sub).toURI().toURL());
+                map.put(sub, new File(file, sub).toURI().toURL());
             }
         } else {
-            this.inputs.put(path, file.toURI().toURL());
+            map.put(path, file.toURI().toURL());
         }
     }
 
@@ -162,7 +175,7 @@ final class Source {
     private static Iterable<String> subs(final File dir) {
         final IOFileFilter filter = new RegexFileFilter("[^\\.].*");
         final Collection<File> files = FileUtils.listFiles(dir, filter, filter);
-        final Collection<String> subs = new ArrayList<String>(files.size());
+        final Collection<String> subs = new ArrayList<>(files.size());
         for (final File file : files) {
             subs.add(file.getPath().substring(dir.getPath().length() + 1));
         }

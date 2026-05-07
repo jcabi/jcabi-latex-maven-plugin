@@ -33,6 +33,7 @@ import com.jcabi.log.Logger;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
@@ -43,10 +44,8 @@ import org.apache.commons.lang3.StringUtils;
  *
  * <p>This class is immutable and thread-safe.
  *
- * @author Yegor Bugayenko (yegor@tpc2.com)
- * @version $Id$
+ * @since 1.0
  */
-@SuppressWarnings("PMD.AvoidInstantiatingObjectsInLoops")
 final class Compiler {
 
     /**
@@ -91,7 +90,6 @@ final class Compiler {
      * @param dir The directory to copy to
      * @throws IOException If some error
      */
-    @SuppressWarnings("PMD.UseConcurrentHashMap")
     private void copy(final Source src, final File dir) throws IOException {
         final Map<String, URL> files = src.files();
         for (final Map.Entry<String, URL> entry : files.entrySet()) {
@@ -117,34 +115,34 @@ final class Compiler {
         final String cmd = StringUtils.join(
             String.format(
                 "'%s' -halt-on-error -interaction=nonstopmode '%s.tex'",
-                this.bin("latex"), src.name()
+                Compiler.bin("latex"), src.name()
             ),
             String.format(
                 " && '%s' -o %s.ps %2$s.dvi",
-                this.bin("dvips"), src.name()
+                Compiler.bin("dvips"), src.name()
             ),
             " && echo quit",
             String.format(
                 // @checkstyle LineLength (1 line)
                 "| '%s' -q -dNOPAUSE -sDEVICE=ppmraw -sOutputFile=- -r300 %s.ps",
-                this.bin("gs"), src.name()
+                Compiler.bin("gs"), src.name()
             ),
             String.format(
                 // @checkstyle LineLength (1 line)
                 "| '%s' -bgcolor rgb:ff/ff/ff -falias -fgcolor rgb:00/00/00 -weight 0.6",
-                this.bin("pnmalias")
+                Compiler.bin("pnmalias")
             ),
             String.format(
                 "| '%s' -white",
-                this.bin("pnmcrop")
+                Compiler.bin("pnmcrop")
             ),
             String.format(
                 "| '%s' 0.5",
-                this.bin("pnmscale")
+                Compiler.bin("pnmscale")
             ),
             String.format(
                 "| '%s' -interlace > '%s.png'",
-                this.bin("pnmtopng"), src.name()
+                Compiler.bin("pnmtopng"), src.name()
             )
         );
         final ProcessBuilder builder =
@@ -157,7 +155,8 @@ final class Compiler {
         final Process process = builder.start();
         FileUtils.write(
             new File(dir, "_output.log"),
-            IOUtils.toString(process.getInputStream())
+            IOUtils.toString(process.getInputStream(), StandardCharsets.UTF_8),
+            StandardCharsets.UTF_8
         );
         final int status;
         try {
@@ -170,13 +169,14 @@ final class Compiler {
             final File error = new File(dir, "_error.log");
             FileUtils.write(
                 error,
-                IOUtils.toString(process.getErrorStream())
+                IOUtils.toString(process.getErrorStream(), StandardCharsets.UTF_8),
+                StandardCharsets.UTF_8
             );
             Logger.error(
                 this,
                 "Compilation failed with code #%d:\n%s",
                 status,
-                FileUtils.readFileToString(error)
+                FileUtils.readFileToString(error, StandardCharsets.UTF_8)
             );
             throw new IOException(
                 String.format(
@@ -194,7 +194,7 @@ final class Compiler {
      * @return Full name
      * @throws IOException If some error
      */
-    private File bin(final String name) throws IOException {
+    private static File bin(final String name) throws IOException {
         final String[] paths = {
             "/bin",
             "/usr/bin",
@@ -215,12 +215,14 @@ final class Compiler {
         }
         if (file == null) {
             final ProcessBuilder builder =
-                this.createProcessBuilderToLocate(name);
+                Compiler.createProcessBuilderToLocate(name);
             final Process process = builder.start();
             try {
                 if (process.waitFor() == 0) {
                     file = new File(
-                        IOUtils.toString(process.getInputStream()).trim()
+                        IOUtils.toString(
+                            process.getInputStream(), StandardCharsets.UTF_8
+                        ).trim()
                     );
                 }
             } catch (final InterruptedException ex) {
@@ -246,10 +248,10 @@ final class Compiler {
      * @param name Short name
      * @return A new {@link ProcessBuilder} instance
      */
-    private ProcessBuilder createProcessBuilderToLocate(final String name) {
-        final String osName = System.getProperty("os.name");
-        String command;
-        if (StringUtils.startsWith(osName, "Windows")) {
+    private static ProcessBuilder createProcessBuilderToLocate(final String name) {
+        final String osname = System.getProperty("os.name");
+        final String command;
+        if (osname != null && osname.startsWith("Windows")) {
             command = "where";
         } else {
             command = "/usr/bin/which";
