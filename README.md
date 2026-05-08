@@ -1,4 +1,6 @@
-<img src="http://img.jcabi.com/logo-square.png" width="64px" height="64px" />
+# jcabi-latex-maven-plugin
+
+![logo](http://img.jcabi.com/logo-square.png)
 
 [![Build Status](https://travis-ci.org/jcabi/jcabi-latex-maven-plugin.svg?branch=master)](https://travis-ci.org/jcabi/jcabi-latex-maven-plugin)
 [![PDD status](http://www.0pdd.com/svg?name=jcabi/jcabi-latex-maven-plugin)](http://www.0pdd.com/p?name=jcabi/jcabi-latex-maven-plugin)
@@ -11,7 +13,8 @@ Project website: [latex.jcabi.com](http://latex.jcabi.com/index.html)
 
 ## Usage
 
-- Make sure LaTeX and [Netpbm](http://netpbm.sourceforge.net/) are installed on your machine;
+- Make sure LaTeX and [Netpbm](http://netpbm.sourceforge.net/) are installed
+  on your machine;
 
 - Configure the plugin pointing it to your LaTeX sources:
 
@@ -43,7 +46,6 @@ Project website: [latex.jcabi.com](http://latex.jcabi.com/index.html)
 
 - Run `mvn site` and a PNG file will be created in `target/site/latex/picture.png`
 
-
 ## Known issues
 
 Using this plugin on a Windows machine is not supported.
@@ -61,6 +63,6 @@ the `master` branch, if they look correct.
 
 Please run Maven build before submitting a pull request:
 
-```
-$ mvn clean install -Pqulice
+```bash
+mvn clean install -Pqulice
 ```

@@ -1,7 +1,9 @@
+# SPDX-FileCopyrightText: Copyright (c) 2009-2026 Yegor Bugayenko
+# SPDX-License-Identifier: MIT
 ---
 # yamllint disable rule:line-length
 name: mvn
-on:
+'on':
   push:
     branches:
       - master
@@ -10,10 +12,11 @@ on:
       - master
 jobs:
   mvn:
+    timeout-minutes: 15
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-24.04]
+        os: [ubuntu-24.04, windows-2022, macos-15]
         java: [17, 21]
     steps:
       - uses: actions/checkout@v6
@@ -28,6 +31,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-jdk-${{ matrix.java }}-maven-
       - name: Install LaTeX and Netpbm
+        if: runner.os == 'Linux'
         run: |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends \

@@ -1,0 +1,32 @@
+# SPDX-FileCopyrightText: Copyright (c) 2009-2026 Yegor Bugayenko
+# SPDX-License-Identifier: MIT
+
+version = 1
+[[annotations]]
+path = [
+    ".0pdd",
+    ".0pdd.yml",
+    ".gitattributes",
+    ".gitignore",
+    ".pdd",
+    ".rultor.yml",
+    "**.json",
+    "**.md",
+    "**.properties",
+    "**.txt",
+    "**.vm",
+    "**/*.json",
+    "**/*.md",
+    "**/*.properties",
+    "**/*.txt",
+    "**/*.vm",
+    "CNAME",
+    "README.md",
+    "est/jcabi-latex.est",
+    "renovate.json",
+    "src/it/simple/invoker.properties",
+    "src/site/resources/CNAME",
+]
+precedence = "override"
+SPDX-FileCopyrightText = "Copyright (c) 2009-2026 Yegor Bugayenko"
+SPDX-License-Identifier = "MIT"

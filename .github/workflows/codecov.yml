@@ -1,11 +1,15 @@
+# SPDX-FileCopyrightText: Copyright (c) 2009-2026 Yegor Bugayenko
+# SPDX-License-Identifier: MIT
 ---
+# yamllint disable rule:line-length
 name: codecov
-on:
+'on':
   push:
     branches:
       - master
 jobs:
   codecov:
+    timeout-minutes: 15
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v6
@@ -19,14 +23,9 @@ jobs:
           key: maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             maven-
-      - name: Install LaTeX and Netpbm
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y --no-install-recommends \
-            texlive-latex-base texlive-latex-recommended \
-            ghostscript netpbm
-      - run: mvn install -Pjacoco --errors --batch-mode
+      - run: mvn install -Pjacoco
       - uses: codecov/codecov-action@v6
         with:
+          token: ${{ secrets.CODECOV_TOKEN }}
           files: ./target/site/jacoco/jacoco.xml
-          fail_ci_if_error: false
+          fail_ci_if_error: true
