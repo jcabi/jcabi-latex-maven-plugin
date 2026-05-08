@@ -5,12 +5,14 @@
 package com.jcabi.latex.maven.plugin;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collections;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
 import org.junit.jupiter.api.io.TempDir;
@@ -26,6 +28,12 @@ final class CompilerTest {
     @Timeout(120)
     void compilesSimpleLatexSourceIntoPng(@TempDir final Path dir)
         throws Exception {
+        Assumptions.assumeTrue(
+            CompilerTest.hasBinary("pdflatex")
+                && CompilerTest.hasBinary("gs")
+                && CompilerTest.hasBinary("pnmtopng"),
+            "pdflatex, ghostscript or netpbm not installed, skipping"
+        );
         final File sources = dir.resolve("src").toFile();
         sources.mkdirs();
         Files.writeString(
@@ -46,5 +54,23 @@ final class CompilerTest {
             new File(save, "hello.png").exists(),
             Matchers.is(true)
         );
+    }
+
+    private static boolean hasBinary(final String name) {
+        final String osname = System.getProperty("os.name");
+        final String which;
+        if (osname != null && osname.startsWith("Windows")) {
+            which = "where";
+        } else {
+            which = "which";
+        }
+        boolean found;
+        try {
+            found = new ProcessBuilder(which, name).start().waitFor() == 0;
+        } catch (final IOException | InterruptedException ex) {
+            Thread.currentThread().interrupt();
+            found = false;
+        }
+        return found;
     }
 }
