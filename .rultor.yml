@@ -9,6 +9,7 @@ assets:
   secring.gpg: yegor256/home#assets/secring.gpg
   pubring.gpg: yegor256/home#assets/pubring.gpg
 install: |
+  sudo /usr/bin/install-latex.sh
   pdd --file=/dev/null
 merge:
   script: |
