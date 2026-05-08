@@ -1,6 +1,6 @@
 /*
- * SPDX-FileCopyrightText: Copyright (c) 2012-2026 jcabi.com
- * SPDX-License-Identifier: BSD-3-Clause
+ * SPDX-FileCopyrightText: Copyright (c) 2009-2026 Yegor Bugayenko
+ * SPDX-License-Identifier: MIT
  */
 
 /**
