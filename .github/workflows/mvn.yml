@@ -30,6 +30,13 @@ jobs:
           key: ${{ runner.os }}-jdk-${{ matrix.java }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-jdk-${{ matrix.java }}-maven-
+      - name: Install LaTeX and Netpbm
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            texlive-latex-base texlive-latex-recommended \
+            ghostscript netpbm
       - run: java -version
       - run: mvn -version
       - run: mvn --errors --batch-mode clean install -Pqulice
