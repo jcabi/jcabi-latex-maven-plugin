@@ -115,16 +115,12 @@ final class Compiler {
         final String cmd = StringUtils.join(
             String.format(
                 "'%s' -halt-on-error -interaction=nonstopmode '%s.tex'",
-                Compiler.bin("latex"), src.name()
-            ),
-            String.format(
-                " && '%s' -o %s.ps %2$s.dvi",
-                Compiler.bin("dvips"), src.name()
+                Compiler.bin("pdflatex"), src.name()
             ),
             " && echo quit",
             String.format(
                 // @checkstyle LineLength (1 line)
-                "| '%s' -q -dNOPAUSE -sDEVICE=ppmraw -sOutputFile=- -r300 %s.ps",
+                "| '%s' -q -dNOPAUSE -sDEVICE=ppmraw -sOutputFile=- -r300 %s.pdf",
                 Compiler.bin("gs"), src.name()
             ),
             String.format(
