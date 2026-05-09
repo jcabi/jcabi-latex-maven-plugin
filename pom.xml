@@ -120,6 +120,13 @@
           </execution>
         </executions>
       </plugin>
+      <plugin>
+        <artifactId>maven-invoker-plugin</artifactId>
+        <configuration>
+          <streamLogs>true</streamLogs>
+          <showErrors>true</showErrors>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
   <profiles>
