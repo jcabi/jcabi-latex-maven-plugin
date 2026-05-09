@@ -99,11 +99,6 @@ final class Compiler {
                 Compiler.bin("gs"), src.name()
             ),
             String.format(
-                // @checkstyle LineLength (1 line)
-                "| '%s' -bgcolor rgb:ff/ff/ff -falias -fgcolor rgb:00/00/00 -weight 0.6",
-                Compiler.bin("pnmalias")
-            ),
-            String.format(
                 "| '%s' -white",
                 Compiler.bin("pnmcrop")
             ),
