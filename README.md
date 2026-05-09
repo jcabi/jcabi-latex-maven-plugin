@@ -13,8 +13,18 @@ Project website: [latex.jcabi.com](http://latex.jcabi.com/index.html)
 
 ## Usage
 
-- Make sure LaTeX and [Netpbm](http://netpbm.sourceforge.net/) are installed
-  on your machine;
+- Make sure the following tools are installed on your machine and
+  available on `PATH`:
+
+  - `pdflatex` (from any LaTeX distribution, e.g. TeX Live)
+  - `gs` (Ghostscript)
+  - `pnmcrop`, `pnmscale`, and `pnmtopng` (from [Netpbm](http://netpbm.sourceforge.net/))
+
+  On Debian or Ubuntu, this is enough:
+
+  ```bash
+  sudo apt-get install -y texlive-latex-base ghostscript netpbm
+  ```
 
 - Configure the plugin pointing it to your LaTeX sources:
 
