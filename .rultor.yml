@@ -10,7 +10,7 @@ assets:
   pubring.gpg: yegor256/home#assets/pubring.gpg
 install: |
   sudo /usr/bin/install-latex.sh
-  sudo apt-get install -y --no-install-recommends netpbm ghostscript
+  sudo /usr/bin/install-netpbm.sh
   pdd --file=/dev/null
 merge:
   script: |
