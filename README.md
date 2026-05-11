@@ -5,26 +5,24 @@
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.jcabi/jcabi-latex-maven-plugin/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.jcabi/jcabi-latex-maven-plugin)
 [![Javadoc](https://javadoc.io/badge/com.jcabi/jcabi-latex-maven-plugin.svg)](http://www.javadoc.io/doc/com.jcabi/jcabi-latex-maven-plugin)
 
-Maven plugin for generating PNG images from LaTeX sources during `mvn site` phase.
+Maven plugin for generating PNG images from LaTeX
+  sources during `mvn site` phase.
 
-Project website: [latex.jcabi.com](http://latex.jcabi.com/index.html)
+Make sure the following tools are installed on your machine and
+available on `PATH`:
 
-## Usage
+- `pdflatex` (from any LaTeX distribution, e.g. TeX Live)
+- `gs` (Ghostscript)
+- `pnmcrop`, `pnmscale`, and `pnmtopng`
+(from [Netpbm](http://netpbm.sourceforge.net/))
 
-- Make sure the following tools are installed on your machine and
-  available on `PATH`:
+On Debian or Ubuntu, this is enough:
 
-  - `pdflatex` (from any LaTeX distribution, e.g. TeX Live)
-  - `gs` (Ghostscript)
-  - `pnmcrop`, `pnmscale`, and `pnmtopng` (from [Netpbm](http://netpbm.sourceforge.net/))
+```bash
+sudo apt-get install -y texlive-latex-base ghostscript netpbm
+```
 
-  On Debian or Ubuntu, this is enough:
-
-  ```bash
-  sudo apt-get install -y texlive-latex-base ghostscript netpbm
-  ```
-
-- Configure the plugin pointing it to your LaTeX sources:
+Configure the plugin pointing it to your LaTeX sources:
 
 ```xml
 <project>
@@ -33,7 +31,7 @@ Project website: [latex.jcabi.com](http://latex.jcabi.com/index.html)
       <plugin>
         <groupId>com.jcabi</groupId>
         <artifactId>jcabi-latex-maven-plugin</artifactId>
-        <version>1.1</version>
+        <version>1.2.0</version>
         <executions>
           <execution>
             <goals>
@@ -52,16 +50,7 @@ Project website: [latex.jcabi.com](http://latex.jcabi.com/index.html)
 </project>
 ```
 
-- Run `mvn site` and a PNG file will be created in `target/site/latex/picture.png`
-
-## Known issues
-
-Using this plugin on a Windows machine is not supported.
-
-## Questions?
-
-If you have any questions about the framework, or something doesn't work as expected,
-please [submit an issue here](https://github.com/jcabi/jcabi-maven-plugin/issues/new).
+Run `mvn site` and a PNG file will be created in `target/site/latex/picture.png`
 
 ## How to contribute?
 
