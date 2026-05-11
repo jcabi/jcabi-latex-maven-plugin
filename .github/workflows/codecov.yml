@@ -23,6 +23,13 @@ jobs:
           key: maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             maven-
+      - name: Install LaTeX and Netpbm
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            texlive-latex-base texlive-latex-recommended \
+            ghostscript netpbm
       - run: mvn install -Pjacoco
       - uses: codecov/codecov-action@v6
         with:
