@@ -24,5 +24,6 @@ release:
     export MAVEN_OPTS="--add-opens java.base/java.util=ALL-UNNAMED --add-opens java.base/java.lang.reflect=ALL-UNNAMED"
     mvn clean deploy -ntp -Pqulice -Psonatype -Pjcabi --batch-mode --errors --settings ../settings.xml || true
     echo "===== integration-test build logs ====="
-    for f in target/its/*/build.log; do echo "----- ${f} -----"; cat "${f}" || true; done
+    shopt -s nullglob
+    for f in target/it/*/build.log; do echo "----- ${f} -----"; cat "${f}" || true; done
     mvn clean site-deploy -Psite --errors --settings ../settings.xml --batch-mode
