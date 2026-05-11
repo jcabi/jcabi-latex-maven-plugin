@@ -1,0 +1,1 @@
+memberSearchIndex = [{"p":"com.jcabi.latex.maven.plugin","c":"CompileMojo","l":"CompileMojo()","u":"%3Cinit%3E()"},{"p":"com.jcabi.latex.maven.plugin","c":"CompileMojo","l":"execute()"}];updateSearchResults();

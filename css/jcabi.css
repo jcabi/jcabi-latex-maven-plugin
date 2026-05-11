@@ -1,48 +1,23 @@
-@import url(http://fonts.googleapis.com/css?family=Maven+Pro:400,500,700);
-@import url(http://fonts.googleapis.com/css?family=Ubuntu+Mono);
 /**
- * Copyright (c) 2012-2014, jcabi.com
- * All rights reserved.
- *
- * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions
- * are met: 1) Redistributions of source code must retain the above
- * copyright notice, this list of conditions and the following
- * disclaimer. 2) Redistributions in binary form must reproduce the above
- * copyright notice, this list of conditions and the following
- * disclaimer in the documentation and/or other materials provided
- * with the distribution. 3) Neither the name of the jcabi.com nor
- * the names of its contributors may be used to endorse or promote
- * products derived from this software without specific prior written
- * permission.
- *
- * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
- * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT
- * NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
- * FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL
- * THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
- * INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
- * (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
- * SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
- * HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
- * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
- * ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED
- * OF THE POSSIBILITY OF SUCH DAMAGE.
+ * SPDX-FileCopyrightText: Copyright (c) 2012-2026 Yegor Bugayenko
+ * SPDX-License-Identifier: MIT
  */
+@import "https://fonts.googleapis.com/css?family=Maven+Pro:400,500,700";
+@import "https://fonts.googleapis.com/css?family=Ubuntu+Mono";
 body {
   margin: 0;
   padding: 20px;
   font-family: "Maven Pro", sans-serif;
   font-size: 20px;
   line-height: 26px;
-  background-color: lightgrey;
-  color: #111111;
+  background-color: #d3d3d3;
+  color: #111;
 }
 @media all and (max-width: 1200px) {
   body {
     font-size: 16px;
     line-height: 20px;
-    background-color: white;
+    background-color: #fff;
     padding: 0;
   }
 }
@@ -52,11 +27,11 @@ a {
   text-decoration: underline;
 }
 a:hover {
-  color: gray;
+  color: #808080;
 }
 
 code, tt {
-  background-color: #eeeeee;
+  background-color: #eee;
   padding: 0 10px;
   font-family: "Ubuntu Mono", monospace;
 }
@@ -80,9 +55,9 @@ h3 {
 }
 
 pre {
-  border-left: 2px solid gray;
+  border-left: 2px solid #808080;
   margin-left: 20px;
-  color: gray;
+  color: #808080;
   padding: 20px;
   font-family: "Ubuntu Mono", monospace;
   font-size: 18px;
@@ -98,7 +73,7 @@ pre {
 }
 
 table {
-  background-color: white;
+  background-color: #fff;
   border: 0;
   border-collapse: collapse;
 }
@@ -148,8 +123,13 @@ table td:nth-child(1) {
     display: none;
   }
 }
+.menu-section .signature {
+  color: #808080;
+  font-size: 75%;
+  width: 30%;
+}
 .menu-section .menu {
-  background-color: white;
+  background-color: #fff;
   padding: 40px 20px 20px;
   margin-right: 20px;
   font-size: 20px;
@@ -165,64 +145,61 @@ table td:nth-child(1) {
 }
 .menu-section .menu > li > ul {
   margin-bottom: 20px;
-  border-top: 1px solid lightgrey;
+  border-top: 1px solid #d3d3d3;
 }
 .menu-section .menu li {
   font-weight: 700;
-  color: gray;
+  color: #808080;
   text-overflow: ellipsis;
   overflow: hidden;
 }
-.menu-section .menu li.active {
-  font-weight: bold;
+.menu-section .menu li a {
+  text-decoration: none;
 }
 .menu-section .menu li ul {
   list-style: none;
   padding-left: 10px;
 }
-.menu-section .menu li ul li {
-  color: #111111;
+.menu-section .menu .active {
+  font-weight: bold;
+}
+.menu-section .menu li li {
+  color: #111;
   font-weight: 400;
-}
-.menu-section .menu li a {
-  text-decoration: none;
-}
-
-.teamed {
-  margin-top: 12px;
 }
 
 .badges {
   margin-top: 12px;
-  color: gray;
+  color: #808080;
   list-style: none;
   padding-left: 0;
   font-size: 16px;
+  /* stylelint-disable-next-line no-descending-specificity */
 }
-.badges li {
+.badges.badges li {
   display: inline;
-  border: 1px solid gray;
+  border: 1px solid #808080;
   border-radius: 3px;
   padding: 4px;
   margin-right: 12px;
 }
-.badges li.menu-button {
+.badges .menu-button {
   display: none;
   cursor: pointer;
 }
-.badges li.menu-button:hover {
-  background-color: gray;
+.badges .menu-button:hover {
+  background-color: #808080;
   color: white;
 }
 @media all and (max-width: 1200px) {
-  .badges li.menu-button {
+  .badges .menu-button {
     display: inline;
   }
 }
 
 .legal-notes {
   margin-top: 20px;
-  color: gray;
+  color: #808080;
   font-size: 16px;
   line-height: 20px;
   text-align: center;
@@ -234,7 +211,7 @@ table td:nth-child(1) {
 }
 
 .content {
-  background-color: white;
+  background-color: #fff;
   position: relative;
   padding: 60px;
 }
@@ -272,6 +249,11 @@ table td:nth-child(1) {
   }
 }
 
-.logo a {
+.logo {
+  /* stylelint-disable-next-line no-descending-specificity */
+}
+.logo.logo a {
   border: 0;
 }
+
+/*# sourceMappingURL=jcabi.css.map */
