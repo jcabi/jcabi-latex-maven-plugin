@@ -19,7 +19,6 @@ import org.slf4j.impl.StaticLoggerBinder;
 
 /**
  * Compile PNG images and PDF documents from TeX/LaTeX sources.
- *
  * @since 1.0
  * @checkstyle MemberNameCheck (500 lines)
  */
@@ -102,7 +101,6 @@ public final class CompileMojo extends AbstractMojo {
      * @param name The name of the source
      * @throws MojoFailureException If some problem
      */
-    @SuppressWarnings("PMD.UnnecessaryLocalRule")
     private void compile(final Compiler compiler, final String name)
         throws MojoFailureException {
         try {

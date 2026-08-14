@@ -30,18 +30,17 @@ final class Output {
         this.file = path;
     }
 
-    /**
-     * Save to this directory.
-     * @param dir The folder to save to
-     * @throws IOException If failed
-     */
-    public void saveTo(final File dir) throws IOException {
-        FileUtils.copyFileToDirectory(this.file, dir);
-    }
-
     @Override
     public String toString() {
         return this.file.getPath();
     }
 
+    /**
+     * Save to this directory.
+     * @param dir The folder to save to
+     * @throws IOException If failed
+     */
+    void saveTo(final File dir) throws IOException {
+        FileUtils.copyFileToDirectory(this.file, dir);
+    }
 }

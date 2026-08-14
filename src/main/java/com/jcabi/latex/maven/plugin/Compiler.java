@@ -34,9 +34,6 @@ final class Compiler {
      */
     Compiler(final File dir) {
         this.temp = dir;
-        if (!this.temp.exists() && this.temp.mkdir()) {
-            Logger.info(Compiler.class, "directory created: %s", this.temp);
-        }
     }
 
     /**
@@ -45,7 +42,10 @@ final class Compiler {
      * @return The output
      * @throws IOException If some error
      */
-    public Output compile(final Source src) throws IOException {
+    Output compile(final Source src) throws IOException {
+        if (!this.temp.exists() && this.temp.mkdir()) {
+            Logger.info(Compiler.class, "directory created: %s", this.temp);
+        }
         final File dir = new File(this.temp, src.name());
         if (dir.exists()) {
             Logger.info(this, "Source '%s' doesn't require re-compiling", src);
@@ -94,7 +94,6 @@ final class Compiler {
             ),
             " && echo quit",
             String.format(
-                // @checkstyle LineLength (1 line)
                 "| '%s' -q -dNOPAUSE -sDEVICE=ppmraw -sOutputFile=- -r300 %s.pdf",
                 Compiler.bin("gs"), src.name()
             ),
@@ -140,7 +139,7 @@ final class Compiler {
             );
             Logger.error(
                 this,
-                "Compilation failed with code #%d:\n%s",
+                "Compilation failed with code #%d:%n%s",
                 status,
                 FileUtils.readFileToString(error, StandardCharsets.UTF_8)
             );
@@ -210,7 +209,6 @@ final class Compiler {
     /**
      * Creates {@link ProcessBuilder} to locate a binary by the specified name
      * depending on the actual OS.
-     *
      * @param name Short name
      * @return A new {@link ProcessBuilder} instance
      */
@@ -224,5 +222,4 @@ final class Compiler {
         }
         return new ProcessBuilder(command, name);
     }
-
 }

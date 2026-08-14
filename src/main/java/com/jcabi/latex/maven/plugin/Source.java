@@ -47,15 +47,32 @@ final class Source {
      */
     Source(final File dir, final String name,
         final Iterable<String> closures) throws IOException {
-        this.main = FilenameUtils.getBaseName(name);
-        this.inputs = Source.collect(dir, name, closures);
+        this(
+            FilenameUtils.getBaseName(name),
+            Source.collect(dir, name, closures)
+        );
+    }
+
+    /**
+     * Private ctor.
+     * @param base Name of the main file, without extension
+     * @param map Names and locations of all files
+     */
+    private Source(final String base, final Map<String, URL> map) {
+        this.main = base;
+        this.inputs = map;
+    }
+
+    @Override
+    public String toString() {
+        return this.name();
     }
 
     /**
      * Build and return names of files and their actual locations.
      * @return Names and locations
      */
-    public Map<String, URL> files() {
+    Map<String, URL> files() {
         Logger.debug(
             this,
             "#files(): %d files found for '%s': %[list]s",
@@ -70,13 +87,8 @@ final class Source {
      * Short name of it (without extension and path).
      * @return The name
      */
-    public String name() {
+    String name() {
         return this.main;
-    }
-
-    @Override
-    public String toString() {
-        return this.name();
     }
 
     /**
@@ -156,5 +168,4 @@ final class Source {
         }
         return subs;
     }
-
 }
