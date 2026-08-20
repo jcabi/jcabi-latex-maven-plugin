@@ -59,12 +59,6 @@ final class Compiler {
         return new Output(new File(dir, String.format("%s.png", src.name())));
     }
 
-    /**
-     * Copy files from source to temp directory.
-     * @param src The source to compile
-     * @param dir The directory to copy to
-     * @throws IOException If some error
-     */
     private void copy(final Source src, final File dir) throws IOException {
         final Map<String, URL> files = src.files();
         for (final Map.Entry<String, URL> entry : files.entrySet()) {
@@ -80,12 +74,6 @@ final class Compiler {
         );
     }
 
-    /**
-     * Process files in the directory.
-     * @param src The source to use
-     * @param dir The directory to process
-     * @throws IOException If some error
-     */
     private void process(final Source src, final File dir) throws IOException {
         final String cmd = StringUtils.join(
             String.format(
@@ -153,12 +141,6 @@ final class Compiler {
         }
     }
 
-    /**
-     * Find binary and return its full name.
-     * @param name Short name
-     * @return Full name
-     * @throws IOException If some error
-     */
     private static File bin(final String name) throws IOException {
         final String[] paths = {
             "/bin",
@@ -206,12 +188,6 @@ final class Compiler {
         return file;
     }
 
-    /**
-     * Creates {@link ProcessBuilder} to locate a binary by the specified name
-     * depending on the actual OS.
-     * @param name Short name
-     * @return A new {@link ProcessBuilder} instance
-     */
     private static ProcessBuilder createProcessBuilderToLocate(final String name) {
         final String osname = System.getProperty("os.name");
         final String command;

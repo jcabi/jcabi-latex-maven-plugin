@@ -95,12 +95,6 @@ public final class CompileMojo extends AbstractMojo {
         }
     }
 
-    /**
-     * Compile one source.
-     * @param compiler The compiler to use
-     * @param name The name of the source
-     * @throws MojoFailureException If some problem
-     */
     private void compile(final Compiler compiler, final String name)
         throws MojoFailureException {
         try {

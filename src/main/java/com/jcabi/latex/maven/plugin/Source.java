@@ -91,14 +91,6 @@ final class Source {
         return this.main;
     }
 
-    /**
-     * Build the map of files for the given source and closures.
-     * @param dir Directory with sources
-     * @param name The main source name
-     * @param closures Additional sources to include
-     * @return Map of file path to URL
-     * @throws IOException If some error inside
-     */
     private static Map<String, URL> collect(final File dir, final String name,
         final Iterable<String> closures) throws IOException {
         if (dir == null || name == null || closures == null) {
@@ -124,13 +116,6 @@ final class Source {
         return map;
     }
 
-    /**
-     * Append one new source to the map.
-     * @param map Target map of paths to URLs
-     * @param dir Directory with sources
-     * @param name The name of source
-     * @throws IOException If some IO problem
-     */
     private static void append(final Map<String, URL> map, final File dir,
         final String name) throws IOException {
         final File file;
@@ -154,11 +139,6 @@ final class Source {
         }
     }
 
-    /**
-     * Find all sub-files in this directory (excluding folders).
-     * @param dir Directory with sources
-     * @return List of files (recursively)
-     */
     private static Iterable<String> subs(final File dir) {
         final IOFileFilter filter = new RegexFileFilter("[^\\.].*");
         final Collection<File> files = FileUtils.listFiles(dir, filter, filter);
