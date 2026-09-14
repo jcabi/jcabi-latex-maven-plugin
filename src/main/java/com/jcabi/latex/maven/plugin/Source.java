@@ -21,7 +21,7 @@ import org.apache.commons.io.filefilter.RegexFileFilter;
 /**
  * Source of one file.
  *
- * <p>This class is immutable and thread-safe.
+ * <p>This class is immutable and thread-safe.</p>
  *
  * @since 1.0
  */
@@ -40,6 +40,7 @@ final class Source {
 
     /**
      * Public ctor.
+     *
      * @param dir Directory with sources
      * @param name Name of source
      * @param closures List of closures
@@ -55,6 +56,7 @@ final class Source {
 
     /**
      * Private ctor.
+     *
      * @param base Name of the main file, without extension
      * @param map Names and locations of all files
      */
@@ -70,6 +72,7 @@ final class Source {
 
     /**
      * Build and return names of files and their actual locations.
+     *
      * @return Names and locations
      */
     Map<String, URL> files() {
@@ -85,6 +88,7 @@ final class Source {
 
     /**
      * Short name of it (without extension and path).
+     *
      * @return The name
      */
     String name() {

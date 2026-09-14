@@ -17,7 +17,7 @@ import org.apache.commons.lang3.StringUtils;
 /**
  * Compiler.
  *
- * <p>This class is immutable and thread-safe.
+ * <p>This class is immutable and thread-safe.</p>
  *
  * @since 1.0
  */
@@ -30,6 +30,7 @@ final class Compiler {
 
     /**
      * Public ctor.
+     *
      * @param dir Temporary directory to use
      */
     Compiler(final File dir) {
@@ -38,6 +39,7 @@ final class Compiler {
 
     /**
      * Compile source and produce output.
+     *
      * @param src The source to compile
      * @return The output
      * @throws IOException If some error

@@ -19,6 +19,7 @@ import org.slf4j.impl.StaticLoggerBinder;
 
 /**
  * Compile PNG images and PDF documents from TeX/LaTeX sources.
+ *
  * @since 1.0
  * @checkstyle MemberNameCheck (500 lines)
  */
@@ -61,19 +62,27 @@ public final class CompileMojo extends AbstractMojo {
      * Sources.
      */
     @Parameter(required = true)
-    private transient Set<String> sources = new HashSet<>(0);
+    private transient Set<String> sources;
 
     /**
      * Closures.
      */
     @Parameter(required = true)
-    private transient Set<String> closures = new HashSet<>(0);
+    private transient Set<String> closures;
 
     /**
      * Shall we skip execution?
      */
     @Parameter(property = "latex.skip", defaultValue = "false")
     private transient boolean skip;
+
+    /**
+     * Ctor.
+     */
+    public CompileMojo() {
+        this.sources = new HashSet<>(0);
+        this.closures = new HashSet<>(0);
+    }
 
     @Override
     public void execute() throws MojoFailureException {

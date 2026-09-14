@@ -11,7 +11,7 @@ import org.apache.commons.io.FileUtils;
 /**
  * Output.
  *
- * <p>This class is immutable and thread-safe.
+ * <p>This class is immutable and thread-safe.</p>
  *
  * @since 1.0
  */
@@ -24,6 +24,7 @@ final class Output {
 
     /**
      * Public ctor.
+     *
      * @param path Location of the file
      */
     Output(final File path) {
@@ -37,6 +38,7 @@ final class Output {
 
     /**
      * Save to this directory.
+     *
      * @param dir The folder to save to
      * @throws IOException If failed
      */
