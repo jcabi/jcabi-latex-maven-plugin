@@ -4,7 +4,6 @@
  */
 package com.jcabi.latex.maven.plugin;
 
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collections;
@@ -53,13 +52,12 @@ final class SourceTest {
             Files.createDirectory(dir.resolve("includes")).resolve("header.tex"),
             "closure source"
         );
-        final Map<String, URL> files = new Source(
-            dir.toFile(), "chapters/picture.tex",
-            Collections.singletonList("includes/header.tex")
-        ).files();
         MatcherAssert.assertThat(
             "Only the main file path must be flattened",
-            files,
+            new Source(
+                dir.toFile(), "chapters/picture.tex",
+                Collections.singletonList("includes/header.tex")
+            ).files(),
             Matchers.equalTo(
                 Map.of(
                     "picture.tex", main.toUri().toURL(),
@@ -73,7 +71,7 @@ final class SourceTest {
     void preservesDirectorySourcePaths(@TempDir final Path dir) throws Exception {
         final Path root = Files.createDirectories(dir.resolve("chapters/picture"));
         final Path main = Files.writeString(root.resolve("picture.tex"), "main");
-        final Path extra = Files.writeString(
+        Files.writeString(
             Files.createDirectory(root.resolve("sections")).resolve("extra.tex"),
             "extra source"
         );
@@ -86,7 +84,7 @@ final class SourceTest {
                 Map.of(
                     "picture.tex", main.toUri().toURL(),
                     dir.getFileSystem().getPath("sections", "extra.tex").toString(),
-                    extra.toUri().toURL()
+                    root.resolve("sections/extra.tex").toUri().toURL()
                 )
             )
         );
