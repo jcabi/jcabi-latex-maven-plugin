@@ -49,7 +49,8 @@ final class Compiler {
             Logger.info(Compiler.class, "directory created: %s", this.temp);
         }
         final File dir = new File(this.temp, src.name());
-        if (dir.exists()) {
+        final File png = new File(dir, String.format("%s.png", src.name()));
+        if (png.isFile()) {
             Logger.info(this, "Source '%s' doesn't require re-compiling", src);
         } else {
             if (dir.mkdir()) {
@@ -58,7 +59,7 @@ final class Compiler {
             this.copy(src, dir);
             this.process(src, dir);
         }
-        return new Output(new File(dir, String.format("%s.png", src.name())));
+        return new Output(png);
     }
 
     private void copy(final Source src, final File dir) throws IOException {
