@@ -48,7 +48,7 @@ final class SourceTest {
             Files.createDirectory(dir.resolve("chapters")).resolve("picture.tex"),
             "main source"
         );
-        final Path closure = Files.writeString(
+        Files.writeString(
             Files.createDirectory(dir.resolve("includes")).resolve("header.tex"),
             "closure source"
         );
@@ -61,7 +61,8 @@ final class SourceTest {
             Matchers.equalTo(
                 Map.of(
                     "picture.tex", main.toUri().toURL(),
-                    "includes/header.tex", closure.toUri().toURL()
+                    "includes/header.tex",
+                    dir.resolve("includes/header.tex").toUri().toURL()
                 )
             )
         );
