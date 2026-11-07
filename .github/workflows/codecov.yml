@@ -4,6 +4,9 @@
 # yamllint disable rule:line-length
 name: codecov
 'on':
+  pull_request:
+    branches:
+      - master
   push:
     branches:
       - master
@@ -17,6 +20,8 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: 25
+          check-latest: true
+      - uses: ./.github/actions/setup-maven
       - uses: actions/cache@v6
         with:
           path: ~/.m2/repository
@@ -30,8 +35,27 @@ jobs:
           sudo apt-get install -y --no-install-recommends \
             texlive-latex-base texlive-latex-recommended \
             ghostscript netpbm
-      - run: mvn install -Pjacoco
+      - name: Log resolved Java and Maven versions
+        run: |
+          java -XshowSettings:properties -version
+          javac -version
+          mvn --version
+          mvn --version | grep -F 'Apache Maven 3.10.0'
+      - run: mvn --errors --batch-mode clean install -Pqulice,jacoco
+      - name: Verify LaTeX outputs and coverage XML
+        run: |
+          test -s target/it/simple/target/site/latex/picture.png
+          test -s target/it/simple/target/site/latex/big-picture.png
+          test -s target/site/jacoco/jacoco.xml
+          python3 - <<'PYTHON'
+          import xml.etree.ElementTree as ET
+          report = ET.parse('target/site/jacoco/jacoco.xml').getroot()
+          assert report.tag == 'report'
+          counter = report.find("./counter[@type='INSTRUCTION']")
+          assert counter is not None and int(counter.attrib['covered']) > 0
+          PYTHON
       - uses: codecov/codecov-action@v7
+        if: github.event_name == 'push'
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./target/site/jacoco/jacoco.xml
