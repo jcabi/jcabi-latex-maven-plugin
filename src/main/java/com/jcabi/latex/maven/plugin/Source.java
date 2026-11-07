@@ -113,7 +113,12 @@ final class Source {
             );
         }
         final Map<String, URL> map = new HashMap<>(0);
-        Source.append(map, dir, name);
+        final File main = new File(dir, name);
+        if (main.isFile()) {
+            map.put(FilenameUtils.getName(name), main.toURI().toURL());
+        } else {
+            Source.append(map, dir, name);
+        }
         for (final String closure : closures) {
             Source.append(map, dir, closure);
         }
