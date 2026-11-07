@@ -15,8 +15,9 @@ jobs:
     timeout-minutes: 15
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
-        os: [ubuntu-24.04, windows-2022, macos-15]
+        os: [ubuntu-26.04, windows-2025, macos-26]
         java: [21]
     steps:
       - uses: actions/checkout@v7
