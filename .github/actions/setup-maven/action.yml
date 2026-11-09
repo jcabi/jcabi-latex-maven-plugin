@@ -1,0 +1,31 @@
+# SPDX-FileCopyrightText: Copyright (c) 2009-2026 Yegor Bugayenko
+# SPDX-License-Identifier: MIT
+---
+name: Set up Maven 3.10.0
+description: Install the declared Maven runtime and verify its Apache checksum
+runs:
+  using: composite
+  steps:
+    - shell: python
+      run: |
+        import hashlib
+        import os
+        from pathlib import Path
+        import tarfile
+        import urllib.request
+
+        version = '3.10.0'
+        name = f'apache-maven-{version}-bin.tar.gz'
+        base = 'https://repo.maven.apache.org/maven2/org/apache/maven'
+        url = f'{base}/apache-maven/{version}/{name}'
+        archive = Path(os.environ['RUNNER_TEMP']) / name
+        urllib.request.urlretrieve(url, archive)
+        with urllib.request.urlopen(f'{url}.sha512') as response:
+            expected = response.read().decode().split()[0]
+        if hashlib.sha512(archive.read_bytes()).hexdigest() != expected:
+            raise RuntimeError('Maven archive SHA-512 mismatch')
+        with tarfile.open(archive) as package:
+            package.extractall(archive.parent, filter='data')
+        binary = archive.parent / f'apache-maven-{version}' / 'bin'
+        with open(os.environ['GITHUB_PATH'], 'a') as paths:
+            paths.write(str(binary) + '\n')
