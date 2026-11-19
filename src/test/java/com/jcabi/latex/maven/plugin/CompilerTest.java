@@ -18,6 +18,8 @@ import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.Timeout;
 import org.junit.jupiter.api.io.TempDir;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 /**
  * Test case for {@link Compiler}.
@@ -26,9 +28,10 @@ import org.junit.jupiter.api.io.TempDir;
  */
 final class CompilerTest {
 
-    @Test
+    @ParameterizedTest
+    @ValueSource(strings = {"hello", "my doc"})
     @Timeout(120)
-    void compilesSimpleLatexSourceIntoPng(@TempDir final Path dir)
+    void compilesSimpleLatexSourceIntoPng(final String name, @TempDir final Path dir)
         throws Exception {
         Assumptions.assumeTrue(
             CompilerTest.hasBinary("pdflatex")
@@ -39,22 +42,22 @@ final class CompilerTest {
         final File sources = dir.resolve("src").toFile();
         sources.mkdirs();
         Files.writeString(
-            sources.toPath().resolve("hello.tex"),
+            sources.toPath().resolve(String.format("%s.tex", name)),
             "\\documentclass{article}\\begin{document}Hi\\end{document}",
             StandardCharsets.UTF_8
         );
         final Output output = new Compiler(
             dir.resolve("temp").toFile()
         ).compile(
-            new Source(sources, "hello.tex", Collections.emptyList())
+            new Source(sources, String.format("%s.tex", name), Collections.emptyList())
         );
         final File save = dir.resolve("out").toFile();
         save.mkdirs();
         output.saveTo(save);
         MatcherAssert.assertThat(
             "PNG file is missing after compiling a simple LaTeX source",
-            new File(save, "hello.png").exists(),
-            Matchers.is(true)
+            new File(save, String.format("%s.png", name)).length(),
+            Matchers.greaterThan(0L)
         );
     }
 
