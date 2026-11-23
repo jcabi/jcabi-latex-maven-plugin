@@ -85,7 +85,7 @@ final class Compiler {
             ),
             " && echo quit",
             String.format(
-                "| '%s' -q -dNOPAUSE -sDEVICE=ppmraw -sOutputFile=- -r300 %s.pdf",
+                "| '%s' -q -dNOPAUSE -sDEVICE=ppmraw -sOutputFile=- -r300 '%s.pdf'",
                 Compiler.bin("gs"), src.name()
             ),
             String.format(
