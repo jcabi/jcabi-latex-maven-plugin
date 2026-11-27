@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.stream.Stream;
 import org.hamcrest.MatcherAssert;
@@ -103,24 +104,37 @@ final class CompilerTest {
         );
     }
 
-    @Test
-    void reusesCompletedCompilation(@TempDir final Path dir) throws Exception {
-        final Path input = Files.writeString(dir.resolve("cached.tex"), "source");
+    @ParameterizedTest
+    @ValueSource(booleans = {false, true})
+    @Timeout(120)
+    void recompilesChangedInput(final boolean closure, @TempDir final Path dir)
+        throws Exception {
+        Assumptions.assumeTrue(
+            Stream.of("pdflatex", "gs", "pnmcrop", "pnmscale", "pnmtopng")
+                .allMatch(CompilerTest::hasBinary),
+            "pdflatex, ghostscript or netpbm not installed, skipping"
+        );
+        final String document = "\\documentclass{article}\\begin{document}%s\\end{document}";
+        final Path main = dir.resolve("picture.tex");
+        final Path words = Files.writeString(dir.resolve("words.tex"), "Before");
+        Files.writeString(main, String.format(document, "\\input{words}"));
         final Source source = new Source(
-            dir.toFile(), "cached.tex", Collections.emptyList()
+            dir.toFile(), "picture.tex", Collections.singletonList("words.tex")
         );
-        final Path temp = Files.createDirectory(dir.resolve("temp"));
-        Files.writeString(
-            Files.createDirectory(temp.resolve("cached")).resolve("cached.png"),
-            "cached output"
-        );
-        Files.delete(input);
+        final Compiler compiler = new Compiler(dir.resolve("work").toFile());
         final File output = Files.createDirectory(dir.resolve("out")).toFile();
-        new Compiler(temp.toFile()).compile(source).saveTo(output);
+        final Path png = output.toPath().resolve("picture.png");
+        compiler.compile(source).saveTo(output);
+        final byte[] before = Files.readAllBytes(png);
+        if (closure) {
+            Files.writeString(words, "Changed closure");
+        } else {
+            Files.writeString(main, String.format(document, "Changed main document"));
+        }
+        compiler.compile(source).saveTo(output);
         MatcherAssert.assertThat(
-            "An existing PNG must be reused without reading the source again",
-            Files.readString(output.toPath().resolve("cached.png")),
-            Matchers.equalTo("cached output")
+            "The published image must reflect the changed input",
+            Arrays.equals(before, Files.readAllBytes(png)), Matchers.is(false)
         );
     }
 

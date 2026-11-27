@@ -50,15 +50,11 @@ final class Compiler {
         }
         final File dir = new File(this.temp, src.name());
         final File png = new File(dir, String.format("%s.png", src.name()));
-        if (png.isFile()) {
-            Logger.info(this, "Source '%s' doesn't require re-compiling", src);
-        } else {
-            if (dir.mkdir()) {
-                Logger.info(this, "directory %s created", dir);
-            }
-            this.copy(src, dir);
-            this.process(src, dir);
+        if (dir.mkdir()) {
+            Logger.info(this, "directory %s created", dir);
         }
+        this.copy(src, dir);
+        this.process(src, dir);
         return new Output(png);
     }
 
