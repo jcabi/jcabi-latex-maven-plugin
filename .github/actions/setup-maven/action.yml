@@ -1,7 +1,7 @@
 # SPDX-FileCopyrightText: Copyright (c) 2009-2026 Yegor Bugayenko
 # SPDX-License-Identifier: MIT
 ---
-name: Set up Maven 3.10.0
+name: Set up Maven 3.10.2
 description: Install the declared Maven runtime and verify its Apache checksum
 runs:
   using: composite
@@ -14,7 +14,7 @@ runs:
         import tarfile
         import urllib.request
 
-        version = '3.10.0'
+        version = '3.10.2'
         name = f'apache-maven-{version}-bin.tar.gz'
         base = 'https://repo.maven.apache.org/maven2/org/apache/maven'
         url = f'{base}/apache-maven/{version}/{name}'

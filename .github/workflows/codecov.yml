@@ -40,7 +40,7 @@ jobs:
           java -XshowSettings:properties -version
           javac -version
           mvn --version
-          mvn --version | grep -F 'Apache Maven 3.10.0'
+          mvn --version | grep -F 'Apache Maven 3.10.2'
       - run: mvn --errors --batch-mode clean install -Pqulice,jacoco
       - name: Verify LaTeX outputs and coverage XML
         run: |
