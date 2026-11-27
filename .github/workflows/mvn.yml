@@ -36,6 +36,7 @@ jobs:
       - name: Install LaTeX and Netpbm
         if: runner.os == 'Linux'
         run: |
+          echo 'https://archive.ubuntu.com/ubuntu' | sudo tee /etc/apt/apt-mirrors.txt
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends \
             texlive-latex-base texlive-latex-recommended \
